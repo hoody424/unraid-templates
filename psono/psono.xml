@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>psono</Name>
+  <Repository>psono/psono-server</Repository>
+  <Registry>https://hub.docker.com/r/psono/psono-server/</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://forums.unraid.net/topic/143057-support-psono-server/</Support>
+  <Project>https://doc.psono.com/admin/installation/install-psono-ce.html</Project>
+  <Overview>Secure self-hosted solution for businesses&#xD;
+&#xD;
+Need settings.yaml in appdata directory (Read First)</Overview>
+  <Category>Security:</Category>
+  <WebUI>http://[IP]:[PORT:80]</WebUI>
+  <TemplateURL/>
+  <Icon>https://doc.psono.com/images/hero.png</Icon>
+  <ExtraParams>--hostname=changeme.example.org</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled>1691021057</DateInstalled>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="Web UI" Target="80" Default="80" Mode="tcp" Description="HTTP port for Web UI" Type="Port" Display="always" Required="false" Mask="false">80</Config>
+  <Config Name="psono config dir" Target="/var/lib/psono" Default="/mnt/user/appdata/psono" Mode="rw" Description="" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/psono</Config>
+</Container>
