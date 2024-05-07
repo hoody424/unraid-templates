@@ -13,7 +13,7 @@
 &#xD;
 You can find the auto-generated password in the docker logs with this command:&#xD;
 &#xD;
-docker logs -f openvpn-as</Overview>
+docker logs -f OpenVPNAccessServer</Overview>
   <Category>Network:VPN</Category>
   <WebUI>https://[IP]:[PORT:943]/admin</WebUI>
   <TemplateURL/>
