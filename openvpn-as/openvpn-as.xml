@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>OpenVPNAccessServer</Name>
+  <Repository>openvpn/openvpn-as</Repository>
+  <Registry>https://hub.docker.com/r/openvpn/openvpn-as</Registry>
+  <Network>br0</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://forums.unraid.net/topic/164603-support-openvpn-as/</Support>
+  <Project>https://as-portal.openvpn.com/</Project>
+  <Overview>The username is openvpn&#xD;
+&#xD;
+You can find the auto-generated password in the docker logs with this command:&#xD;
+&#xD;
+docker logs -f openvpn-as</Overview>
+  <Category>Network:VPN</Category>
+  <WebUI>https://[IP]:[PORT:943]/admin</WebUI>
+  <TemplateURL/>
+  <Icon>https://avatars.githubusercontent.com/u/1569141?s=48&amp;amp;v=4</Icon>
+  <ExtraParams>--cap-add=NET_ADMIN</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled>1715094132</DateInstalled>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="data" Target="/openvpn" Default="/mnt/user/appdata/openvpn-as" Mode="rw" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/openvpn-as</Config>
+  <Config Name="Web UI HTTPS" Target="" Default="943" Mode="tcp" Description="" Type="Port" Display="always" Required="true" Mask="false">943</Config>
+  <Config Name="Tunnel SSL" Target="" Default="443" Mode="tcp" Description="" Type="Port" Display="always" Required="true" Mask="false">443</Config>
+  <Config Name="OpenVPN UDP " Target="" Default="1194" Mode="udp" Description="" Type="Port" Display="always" Required="true" Mask="false">1194</Config>
+</Container>
