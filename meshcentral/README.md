@@ -14,9 +14,12 @@ Template: [meshcentral.xml](meshcentral.xml), image: `ghcr.io/ylianst/meshcentra
 2. Keep the **HTTPS port** (host side), its container port and **PORT** the same
    number (default 8443). MeshCentral tells the agents to connect to the port
    it listens on, so a different host port breaks the agents.
-3. Start the container and open `https://<server>:8443`. The browser warns about
-   the self-signed certificate. The first account you create becomes the
-   administrator.
+3. Start the container and open `https://<Server name>:8443`, using exactly the
+   name from HOSTNAME. MeshCentral refuses other names and the bare IP: after
+   login you get "Invalid origin in HTTP request". The WebUI button in the
+   Docker tab uses the server IP, so it only works when HOSTNAME is that IP.
+   The browser warns about the self-signed certificate. The first account you
+   create becomes the administrator.
 
 ## config.json
 

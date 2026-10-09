@@ -13,7 +13,7 @@
 
 Before the first start: set Server name (HOSTNAME) to the DNS name or IP that agents and browsers use. Keep the HTTPS host port, its container port and PORT the same number: MeshCentral tells the agents to connect to the port it listens on.
 
-Then open https://[server]:8443. The first account you create becomes the administrator.
+Then open https://[Server name]:8443, using exactly the Server name: MeshCentral refuses other names and the bare IP with &quot;Invalid origin&quot; after login. The WebUI button uses the IP, so it only works when HOSTNAME is the IP. The first account you create becomes the administrator.
 
 DYNAMIC_CONFIG=true writes the values of this template into config.json at every start. Set it to false if you prefer to edit appdata/meshcentral/data/config.json by hand.</Overview>
   <Category>Network:Management Tools:System</Category>
@@ -26,6 +26,7 @@ DYNAMIC_CONFIG=true writes the values of this template into config.json at every
   <Changes>
 ### 2026-10-09
 - Initial release
+- Note on opening the web UI by the Server name
   </Changes>
   <Date>2026-10-09</Date>
   <ExtraParams/>
