@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>ntopng</Name>
+  <Repository>ntop/ntopng:latest</Repository>
+  <Registry>https://hub.docker.com/r/ntop/ntopng/</Registry>
+  <Network>host</Network>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/hoody424/unraid-templates/issues</Support>
+  <Project>https://www.ntop.org/products/traffic-analysis/ntop/</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/ntopng/README.md</ReadMe>
+  <Overview>ntopng is a web-based network traffic analysis tool: it shows hosts, flows, applications and throughput on the interface it listens to. Uses the official image ntop/ntopng (Community edition without a license).
+
+Requires a Redis container on this server that publishes port 6379, for example the Redis app from Community Apps. ntopng keeps its users and settings in Redis. The image's own internal Redis cannot save on Unraid, so without an external Redis every restart or update resets them.
+
+All options are in ntopng options: -i is the interface to monitor (br0 on most Unraid servers), -w the web port, -r the Redis server and database number, -m your local networks. Host networking is needed to see the server's traffic.
+
+Default login: admin / admin, ntopng asks for a new password at the first login.</Overview>
+  <Category>Network:Management Network:Other</Category>
+  <WebUI>http://[IP]:[PORT:3000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/ntopng/ntopng.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hoody424/unraid-templates/main/ntopng/ntopng.png</Icon>
+  <ExtraSearchTerms>ntop traffic network monitoring flows bandwidth netflow</ExtraSearchTerms>
+  <Requires>A Redis container on this server publishing port 6379 (for example the Redis app from Community Apps).</Requires>
+  <License>GPL-3.0</License>
+  <Changes>
+### 2026-10-09
+- Initial release
+  </Changes>
+  <Date>2026-10-09</Date>
+  <ExtraParams>--cap-add=NET_ADMIN --cap-add=NET_RAW</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="ntopng options" Target="NTOP_CONFIG" Default="-i br0 -w 3000 -r 127.0.0.1:6379@3 -m 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16" Description="Command line options. -i interface to monitor, -w web port (also change the WebUI link), -r Redis host:port@database (pick a database number no other app uses), -m local networks, comma-separated without spaces or quotes." Type="Variable" Display="always" Required="true" Mask="false">-i br0 -w 3000 -r 127.0.0.1:6379@3 -m 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16</Config>
+  <Config Name="Data" Target="/var/lib/ntopng" Default="/mnt/user/appdata/ntopng/data" Mode="rw" Description="Time series and runtime data. ntopng changes the owner of this folder itself." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/ntopng/data</Config>
+</Container>
