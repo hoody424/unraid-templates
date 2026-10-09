@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<CommunityApplications>
+  <Profile>
+Unraid templates maintained by hoody424.
+
+- **MeshCentral**: self-hosted remote management (remote desktop, terminal, files), official image ghcr.io/ylianst/meshcentral.
+- **OpenVPN Access Server**: official image openvpn/openvpn-as.
+- **psono**: self-hosted password manager server, psono/psono-server.
+
+Each app links its support page. Template problems can also go to https://github.com/hoody424/unraid-templates/issues.
+  </Profile>
+  <Icon>https://raw.githubusercontent.com/hoody424/unraid-templates/main/meshcentral/meshcentral.png</Icon>
+  <WebPage>https://github.com/hoody424/unraid-templates</WebPage>
+</CommunityApplications>

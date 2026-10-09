@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>MeshCentral</Name>
+  <Repository>ghcr.io/ylianst/meshcentral:latest</Repository>
+  <Registry>https://github.com/Ylianst/MeshCentral/pkgs/container/meshcentral</Registry>
+  <Network>bridge</Network>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/hoody424/unraid-templates/issues</Support>
+  <Project>https://meshcentral.com</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/meshcentral/README.md</ReadMe>
+  <Overview>MeshCentral is a free, open-source, self-hosted remote management server. Through a small agent you get remote desktop, terminal, file transfer and power control for Windows, Linux and macOS devices, all in the browser. Uses the official image ghcr.io/ylianst/meshcentral.
+
+Before the first start: set Server name (HOSTNAME) to the DNS name or IP that agents and browsers use. Keep the HTTPS host port, its container port and PORT the same number: MeshCentral tells the agents to connect to the port it listens on.
+
+Then open https://[server]:8443. The first account you create becomes the administrator.
+
+DYNAMIC_CONFIG=true writes the values of this template into config.json at every start. Set it to false if you prefer to edit appdata/meshcentral/data/config.json by hand.</Overview>
+  <Category>Network:Management Tools:System</Category>
+  <WebUI>https://[IP]:[PORT:8443]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/meshcentral/meshcentral.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hoody424/unraid-templates/main/meshcentral/meshcentral.png</Icon>
+  <ExtraSearchTerms>remote desktop rmm agent management support teamviewer anydesk rustdesk intel amt</ExtraSearchTerms>
+  <Requires>Set Server name (HOSTNAME) before the first start. It is built into every agent installer.</Requires>
+  <License>Apache-2.0</License>
+  <Changes>
+### 2026-10-09
+- Initial release
+  </Changes>
+  <Date>2026-10-09</Date>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="HTTPS port" Target="8443" Default="8443" Mode="tcp" Description="Web UI and agent connections. Host port, container port and PORT must be the same number." Type="Port" Display="always" Required="true" Mask="false">8443</Config>
+  <Config Name="HTTP port" Target="80" Default="8080" Mode="tcp" Description="Plain HTTP, redirects to HTTPS. Any free host port." Type="Port" Display="always" Required="false" Mask="false">8080</Config>
+  <Config Name="Data" Target="/opt/meshcentral/meshcentral-data" Default="/mnt/user/appdata/meshcentral/data" Mode="rw" Description="config.json, certificates and the built-in database. Back this up." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/meshcentral/data</Config>
+  <Config Name="Files" Target="/opt/meshcentral/meshcentral-files" Default="/mnt/user/appdata/meshcentral/files" Mode="rw" Description="Files stored on the server through the web UI." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/meshcentral/files</Config>
+  <Config Name="Backups" Target="/opt/meshcentral/meshcentral-backups" Default="/mnt/user/appdata/meshcentral/backups" Mode="rw" Description="Server backups (when autoBackup is enabled in config.json)." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/meshcentral/backups</Config>
+  <Config Name="Web" Target="/opt/meshcentral/meshcentral-web" Default="/mnt/user/appdata/meshcentral/web" Mode="rw" Description="Custom web pages and themes. Can stay empty." Type="Path" Display="advanced" Required="false" Mask="false">/mnt/user/appdata/meshcentral/web</Config>
+  <Config Name="Server name (HOSTNAME)" Target="HOSTNAME" Default="" Description="DNS name or IP that agents and browsers use to reach this server, e.g. mesh.example.com. Used for the server certificate and built into every agent installer." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="PORT" Target="PORT" Default="8443" Description="Port MeshCentral listens on and tells the agents. Must match the HTTPS port above." Type="Variable" Display="always" Required="true" Mask="false">8443</Config>
+  <Config Name="DYNAMIC_CONFIG" Target="DYNAMIC_CONFIG" Default="true|false" Description="true: write the values of this template into config.json at every start. false: config.json is only created once and then left alone." Type="Variable" Display="always" Required="true" Mask="false">true</Config>
+  <Config Name="ALLOW_NEW_ACCOUNTS" Target="ALLOW_NEW_ACCOUNTS" Default="false|true" Description="Let anyone create an account on the login page. The first account is always allowed and becomes the administrator." Type="Variable" Display="always" Required="false" Mask="false">false</Config>
+  <Config Name="WEBRTC" Target="WEBRTC" Default="false|true" Description="Use WebRTC for direct connections between browser and agent." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="ALLOW_PLUGINS" Target="ALLOW_PLUGINS" Default="false|true" Description="Enable MeshCentral plugins." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="IFRAME" Target="IFRAME" Default="false|true" Description="Allow the web UI to be embedded in an iframe." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="MINIFY" Target="MINIFY" Default="true|false" Description="Serve minified web pages." Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>
+  <Config Name="LOCAL_SESSION_RECORDING" Target="LOCAL_SESSION_RECORDING" Default="true|false" Description="Allow recording of remote sessions." Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>
+  <Config Name="REVERSE_PROXY" Target="REVERSE_PROXY" Default="" Description="Public name of a reverse proxy in front of MeshCentral, e.g. mesh.example.com. MeshCentral loads the proxy certificate from there so agents trust it. See the README." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="REVERSE_PROXY_TLS_PORT" Target="REVERSE_PROXY_TLS_PORT" Default="443" Description="HTTPS port of the reverse proxy." Type="Variable" Display="advanced" Required="false" Mask="false">443</Config>
+  <Config Name="TLS_OFFLOAD" Target="TLS_OFFLOAD" Default="" Description="IP of the reverse proxy when it terminates TLS and talks plain HTTP to MeshCentral. Leave EMPTY otherwise: any value, even false, switches TLS off." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="TRUSTED_PROXY" Target="TRUSTED_PROXY" Default="" Description="Trust X-Forwarded-For from: all, or one IP in double quotes, e.g. &quot;172.17.0.1&quot;." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="INSTALL_STYLISHUI" Target="INSTALL_STYLISHUI" Default="false|true" Description="Download and install the third-party Stylish UI theme at every start." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="USE_MONGODB" Target="USE_MONGODB" Default="false|true" Description="Use MongoDB instead of the built-in database (recommended for many devices)." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="MONGO_URL" Target="MONGO_URL" Default="" Description="e.g. mongodb://user:password@192.168.1.10:27017/meshcentral" Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="USE_MARIADB" Target="USE_MARIADB" Default="false|true" Description="Use MariaDB/MySQL instead of the built-in database." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="MARIADB_HOST" Target="MARIADB_HOST" Default="" Description="MariaDB server name or IP." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="MARIADB_PORT" Target="MARIADB_PORT" Default="3306" Description="MariaDB port." Type="Variable" Display="advanced" Required="false" Mask="false">3306</Config>
+  <Config Name="MARIADB_USER" Target="MARIADB_USER" Default="" Description="MariaDB user." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="MARIADB_PASS" Target="MARIADB_PASS" Default="" Description="MariaDB password." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="MARIADB_DATABASE" Target="MARIADB_DATABASE" Default="meshcentral" Description="MariaDB database name." Type="Variable" Display="advanced" Required="false" Mask="false">meshcentral</Config>
+  <Config Name="USE_POSTGRESQL" Target="USE_POSTGRESQL" Default="false|true" Description="Use PostgreSQL instead of the built-in database." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="PSQL_HOST" Target="PSQL_HOST" Default="" Description="PostgreSQL server name or IP." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="PSQL_PORT" Target="PSQL_PORT" Default="5432" Description="PostgreSQL port." Type="Variable" Display="advanced" Required="false" Mask="false">5432</Config>
+  <Config Name="PSQL_USER" Target="PSQL_USER" Default="" Description="PostgreSQL user." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="PSQL_PASS" Target="PSQL_PASS" Default="" Description="PostgreSQL password." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="PSQL_DATABASE" Target="PSQL_DATABASE" Default="meshcentral" Description="PostgreSQL database name." Type="Variable" Display="advanced" Required="false" Mask="false">meshcentral</Config>
+</Container>
