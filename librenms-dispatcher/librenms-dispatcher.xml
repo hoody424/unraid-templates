@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>LibreNMS-Dispatcher</Name>
+  <Repository>librenms/librenms:latest</Repository>
+  <Registry>https://hub.docker.com/r/librenms/librenms</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/hoody424/unraid-templates/issues</Support>
+  <Project>https://github.com/librenms/docker#dispatcher-service-container</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/librenms-dispatcher/README.md</ReadMe>
+  <Overview>Dispatcher service sidecar for an existing LibreNMS container (for example librenms from A75G's repository). The official LibreNMS image does not poll devices on its own: polling and discovery run in at least one separate dispatcher container. This template runs that container from the same official image librenms/librenms with SIDECAR_DISPATCHER=1.
+
+Use the same appdata folder (/data) and the same database settings as your LibreNMS container, and start LibreNMS first. Redis is required (the dispatcher does not start without it), for example the Redis app from Community Apps. With several dispatchers, give each a unique DISPATCHER_NODE_ID and hostname.
+
+Check the result in LibreNMS under Settings - Pollers: the dispatcher shows up with its node ID and hostname.</Overview>
+  <Category>Network:Management Tools:System</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/librenms-dispatcher/librenms-dispatcher.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hoody424/unraid-templates/main/librenms-dispatcher/librenms-dispatcher.png</Icon>
+  <ExtraSearchTerms>librenms poller dispatcher sidecar snmp monitoring</ExtraSearchTerms>
+  <Requires>A running LibreNMS container (for example librenms from A75G's repository), its MariaDB/MySQL database, and a Redis server.</Requires>
+  <License>GPL-3.0</License>
+  <Changes>
+### 2026-10-09
+- Initial release
+  </Changes>
+  <Date>2026-10-09</Date>
+  <ExtraParams>--hostname=librenms-dispatcher</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="Appdata" Target="/data" Default="/mnt/user/appdata/librenms/" Mode="rw" Description="The SAME folder your LibreNMS container uses for /data (config, RRD files, logs)." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/librenms/</Config>
+  <Config Name="DB_HOST" Target="DB_HOST" Default="" Description="Database host or IP, as in your LibreNMS container. It must be reachable from this container's network." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="DB_PORT" Target="DB_PORT" Default="3306" Description="Database port." Type="Variable" Display="always" Required="true" Mask="false">3306</Config>
+  <Config Name="DB_NAME" Target="DB_NAME" Default="librenms" Description="Database name, as in your LibreNMS container." Type="Variable" Display="always" Required="true" Mask="false">librenms</Config>
+  <Config Name="DB_USER" Target="DB_USER" Default="librenms" Description="Database user, as in your LibreNMS container." Type="Variable" Display="always" Required="true" Mask="false">librenms</Config>
+  <Config Name="DB_PASSWORD" Target="DB_PASSWORD" Default="" Description="Database password, as in your LibreNMS container." Type="Variable" Display="always" Required="true" Mask="true"/>
+  <Config Name="DB_TIMEOUT" Target="DB_TIMEOUT" Default="60" Description="Seconds to wait for the database at start." Type="Variable" Display="advanced" Required="false" Mask="false">60</Config>
+  <Config Name="DISPATCHER_NODE_ID" Target="DISPATCHER_NODE_ID" Default="dispatcher1" Description="Unique ID of this dispatcher. Use a different one for each dispatcher container." Type="Variable" Display="always" Required="true" Mask="false">dispatcher1</Config>
+  <Config Name="REDIS_HOST" Target="REDIS_HOST" Default="" Description="Redis host or IP. Required: the dispatcher does not start without Redis. Set the same Redis on the LibreNMS container." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="REDIS_PORT" Target="REDIS_PORT" Default="6379" Description="Redis port." Type="Variable" Display="advanced" Required="false" Mask="false">6379</Config>
+  <Config Name="REDIS_PASSWORD" Target="REDIS_PASSWORD" Default="" Description="Redis password, if any." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="REDIS_DB" Target="REDIS_DB" Default="0" Description="Redis database number." Type="Variable" Display="advanced" Required="false" Mask="false">0</Config>
+  <Config Name="DISPATCHER_ARGS" Target="DISPATCHER_ARGS" Default="" Description="Extra arguments for librenms-service.py, e.g. -v for verbose logs." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="MEMORY_LIMIT" Target="MEMORY_LIMIT" Default="256M" Description="PHP memory limit for the poller processes." Type="Variable" Display="advanced" Required="false" Mask="false">256M</Config>
+  <Config Name="SIDECAR_DISPATCHER" Target="SIDECAR_DISPATCHER" Default="1" Description="Runs this container as dispatcher. Must stay 1." Type="Variable" Display="advanced" Required="true" Mask="false">1</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Description="User ID, same as in your LibreNMS container." Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Description="Group ID, same as in your LibreNMS container." Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+</Container>
