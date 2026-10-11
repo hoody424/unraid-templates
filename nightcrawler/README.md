@@ -44,6 +44,10 @@ as **eBay client ID** and the Cert ID as **eBay client secret**.
 after that, enable it on the Sources page. Pick the marketplace (EBAY_DE,
 EBAY_US, ...) there too.
 
+eBay keeps a new Production keyset disabled until you handle Marketplace
+Account Deletion (subscribe or opt out), see
+[eBay setup](https://github.com/hoody424/nightcrawler#ebay-setup).
+
 ## Notifications
 
 Settings > Notifications takes one [Apprise URL](https://github.com/caronc/apprise/wiki)
