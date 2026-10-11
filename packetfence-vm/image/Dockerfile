@@ -1,4 +1,4 @@
-FROM alpine:3.22
+FROM alpine:3.24
 
 RUN apk add --no-cache bash ca-certificates coreutils curl jq libarchive-tools libvirt-client qemu-img tzdata
 
