@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>nightcrawler</Name>
+  <Repository>ghcr.io/hoody424/nightcrawler:latest</Repository>
+  <Registry>https://github.com/hoody424/nightcrawler/pkgs/container/nightcrawler</Registry>
+  <Network>bridge</Network>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/hoody424/nightcrawler/issues</Support>
+  <Project>https://github.com/hoody424/nightcrawler</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/nightcrawler/README.md</ReadMe>
+  <Overview>nightcrawler watches marketplaces and shops for new, used and refurbished products. Watchlists run on a schedule; listings are filtered by real specs read from the titles (brand, storage, RAM, CPU, screen, ...) like on Geizhals, with price history, price-drop and sold detection, a deal score and notifications through Apprise (Discord, Telegram, ntfy, e-mail, ...).
+
+Sources: the official eBay Browse API (free developer keys), any Shopify store, and any other shop through CSS selectors.
+
+Optional AI with your Claude Pro/Max subscription: relevance filter per watchlist in plain language, natural-language search, deal check. Get a token in the container console with: claude setup-token. Then paste it into the template or into Settings &gt; AI in the web UI.
+
+Open the web UI after the start. A demo source with test data is set up on the first start. Watchlists, sources and settings are managed in the web UI and stored in appdata.</Overview>
+  <Category>Tools:Utilities Productivity: AI:</Category>
+  <WebUI>http://[IP]:[PORT:8080]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/nightcrawler/nightcrawler.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hoody424/unraid-templates/main/nightcrawler/nightcrawler.png</Icon>
+  <ExtraSearchTerms>crawler scraper price tracker deals ebay shopify geizhals used refurbished alerts claude ai</ExtraSearchTerms>
+  <License>GPL-3.0</License>
+  <Changes>
+### 2026-10-11
+- Initial release
+  </Changes>
+  <Date>2026-10-11</Date>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="WebUI port" Target="8080" Default="8080" Mode="tcp" Description="Web UI and REST API (/api/docs)." Type="Port" Display="always" Required="true" Mask="false">8080</Config>
+  <Config Name="Data" Target="/data" Default="/mnt/user/appdata/nightcrawler" Mode="rw" Description="Database, settings and the Claude login. Back this up." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/nightcrawler</Config>
+  <Config Name="Claude subscription token" Target="CLAUDE_CODE_OAUTH_TOKEN" Default="" Description="Optional, for the AI features. Run claude setup-token in the container console and paste the sk-ant-oat... token here (or in Settings &gt; AI)." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="Username" Target="NIGHTCRAWLER_USERNAME" Default="" Description="Protect the web UI with a login (HTTP basic auth). Set it together with Password. Empty = no login." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Password" Target="NIGHTCRAWLER_PASSWORD" Default="" Description="Password for the login above." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="eBay enabled" Target="EBAY_ENABLED" Default="false|true" Description="Enable the eBay source on the first start (later: Sources page in the web UI). Needs the two keys below." Type="Variable" Display="always" Required="false" Mask="false">false</Config>
+  <Config Name="eBay client ID" Target="EBAY_CLIENT_ID" Default="" Description="App ID of a free Production keyset from developer.ebay.com." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="eBay client secret" Target="EBAY_CLIENT_SECRET" Default="" Description="Cert ID of the same keyset." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="Anthropic API key" Target="ANTHROPIC_API_KEY" Default="" Description="Alternative to the subscription, billed per token. Choose the Anthropic API key backend in Settings &gt; AI." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="PUID" Target="PUID" Default="99" Description="User the app runs as. Files in Data get this owner." Type="Variable" Display="advanced" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Description="Group the app runs as." Type="Variable" Display="advanced" Required="true" Mask="false">100</Config>
+</Container>

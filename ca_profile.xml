@@ -6,6 +6,8 @@ Unraid templates maintained by hoody424.
 - **MeshCentral**: self-hosted remote management (remote desktop, terminal, files), official image ghcr.io/ylianst/meshcentral.
 - **LibreNMS-Dispatcher**: the poller sidecar the official LibreNMS image needs, for an existing LibreNMS container (for example A75G's).
 - **ntopng**: network traffic analysis, official image ntop/ntopng, with an external Redis so settings survive updates.
+- **nightcrawler**: watches marketplaces and shops (eBay, Shopify, any web shop) for new and used products, with spec filters, price tracking, alerts and optional Claude AI.
+- **PacketFence-VM**: installs the PacketFence ZEN appliance as a VM in the Unraid VM tab.
 - **OpenVPN Access Server**: official image openvpn/openvpn-as.
 - **psono**: self-hosted password manager server, psono/psono-server.
 
