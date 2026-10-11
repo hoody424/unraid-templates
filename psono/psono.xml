@@ -1,28 +1,35 @@
 <?xml version="1.0"?>
 <Container version="2">
   <Name>psono</Name>
-  <Repository>psono/psono-server</Repository>
+  <Repository>psono/psono-server:latest</Repository>
   <Registry>https://hub.docker.com/r/psono/psono-server/</Registry>
   <Network>bridge</Network>
-  <MyIP/>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
   <Support>https://forums.unraid.net/topic/143057-support-psono-server/</Support>
-  <Project>https://doc.psono.com/admin/installation/install-psono-ce.html</Project>
-  <Overview>Secure self-hosted solution for businesses&#xD;
-&#xD;
-Need settings.yaml in appdata directory (Read First)</Overview>
+  <Project>https://psono.com</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/psono/README.md</ReadMe>
+  <Overview>Psono server: the backend of the self-hosted Psono password manager for teams. Official image psono/psono-server. The Psono browser extensions, apps and web client connect to it. This container has no web UI of its own: the WebUI button opens /info/, which shows the server version when it runs.
+
+Before the first start: a PostgreSQL database and settings.yaml in the config folder (appdata/psono/settings.yaml). The README has the steps. Database migrations run automatically at every start. For real use, put it behind a reverse proxy with HTTPS.</Overview>
   <Category>Security:</Category>
-  <WebUI>http://[IP]:[PORT:80]</WebUI>
-  <TemplateURL/>
+  <WebUI>http://[IP]:[PORT:80]/info/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/psono/psono.xml</TemplateURL>
   <Icon>https://doc.psono.com/images/hero.png</Icon>
-  <ExtraParams>--hostname=changeme.example.org</ExtraParams>
+  <ExtraSearchTerms>password manager vault team bitwarden vaultwarden</ExtraSearchTerms>
+  <Requires>A PostgreSQL database and settings.yaml in the config folder before the first start (see the README).</Requires>
+  <Changes>
+### 2026-10-11
+- Config folder now maps to /root/.psono_server, where the image reads settings.yaml (the current image does not look in /var/lib/psono). Existing installs: change the container path to /root/.psono_server in Edit.
+- Default host port 10100 instead of 80 (the Unraid web UI uses 80)
+- Removed the placeholder --hostname; WebUI opens /info/; README with setup steps
+  </Changes>
+  <Date>2026-10-11</Date>
+  <ExtraParams/>
   <PostArgs/>
   <CPUset/>
-  <DateInstalled>1691021057</DateInstalled>
   <DonateText/>
   <DonateLink/>
-  <Requires/>
-  <Config Name="Web UI" Target="80" Default="80" Mode="tcp" Description="HTTP port for Web UI" Type="Port" Display="always" Required="false" Mask="false">80</Config>
-  <Config Name="psono config dir" Target="/var/lib/psono" Default="/mnt/user/appdata/psono" Mode="rw" Description="" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/psono</Config>
+  <Config Name="API port" Target="80" Default="10100" Mode="tcp" Description="Psono server API. Clients and your reverse proxy connect here." Type="Port" Display="always" Required="true" Mask="false">10100</Config>
+  <Config Name="Config folder" Target="/root/.psono_server" Default="/mnt/user/appdata/psono" Mode="rw" Description="Must contain settings.yaml (see the README)." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/psono</Config>
 </Container>

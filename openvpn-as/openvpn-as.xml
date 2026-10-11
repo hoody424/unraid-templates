@@ -4,29 +4,36 @@
   <Repository>openvpn/openvpn-as</Repository>
   <Registry>https://hub.docker.com/r/openvpn/openvpn-as</Registry>
   <Network>br0</Network>
-  <MyIP/>
   <Shell>bash</Shell>
   <Privileged>false</Privileged>
   <Support>https://forums.unraid.net/topic/164603-support-openvpn-as/</Support>
-  <Project>https://as-portal.openvpn.com/</Project>
-  <Overview>The username is openvpn&#xD;
-&#xD;
-You can find the auto-generated password in the docker logs with this command:&#xD;
-&#xD;
-docker logs -f OpenVPNAccessServer</Overview>
+  <Project>https://openvpn.net/access-server/</Project>
+  <Overview>OpenVPN Access Server: an OpenVPN server with a web admin UI and a client portal that hands out ready-made client profiles. Official image openvpn/openvpn-as. Without a license key it allows 2 simultaneous VPN connections.
+
+Admin UI: https://[IP]:943/admin, user openvpn. The first start generates the password and writes it to the log: Docker tab, container icon &gt; Logs, look for &quot;Auto-generated pass&quot;. Or on the console: docker logs OpenVPNAccessServer 2&gt;&amp;1 | grep &quot;Auto-generated pass&quot;
+
+The template uses br0, so the container gets its own IP address on your LAN. Unraid falls back to no network at all when br0 does not exist (bridging off in Network Settings): then pick bridge and change the 443 host port, which the Unraid web UI usually uses.</Overview>
   <Category>Network:VPN</Category>
   <WebUI>https://[IP]:[PORT:943]/admin</WebUI>
-  <TemplateURL/>
-  <Icon>https://avatars.githubusercontent.com/u/1569141?s=48&amp;amp;v=4</Icon>
-  <ExtraParams>--cap-add=NET_ADMIN</ExtraParams>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/openvpn-as/openvpn-as.xml</TemplateURL>
+  <Icon>https://avatars.githubusercontent.com/u/1569141?s=256&amp;v=4</Icon>
+  <ExtraSearchTerms>vpn openvpn access server remote access</ExtraSearchTerms>
+  <Changes>
+### 2026-10-11
+- Ports now name their container port (943, 443, 1194/udp)
+- /dev/net/tun and MKNOD added, as in the official docker run command
+- Icon URL fixed, longer overview with the admin password hint
+  </Changes>
+  <Date>2026-10-11</Date>
+  <ExtraParams>--cap-add=NET_ADMIN --cap-add=MKNOD</ExtraParams>
   <PostArgs/>
   <CPUset/>
-  <DateInstalled>1715094132</DateInstalled>
   <DonateText/>
   <DonateLink/>
   <Requires/>
-  <Config Name="data" Target="/openvpn" Default="/mnt/user/appdata/openvpn-as" Mode="rw" Description="" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/openvpn-as</Config>
-  <Config Name="Web UI HTTPS" Target="" Default="943" Mode="tcp" Description="" Type="Port" Display="always" Required="true" Mask="false">943</Config>
-  <Config Name="Tunnel SSL" Target="" Default="443" Mode="tcp" Description="" Type="Port" Display="always" Required="true" Mask="false">443</Config>
-  <Config Name="OpenVPN UDP " Target="" Default="1194" Mode="udp" Description="" Type="Port" Display="always" Required="true" Mask="false">1194</Config>
+  <Config Name="Config folder" Target="/openvpn" Default="/mnt/user/appdata/openvpn-as" Mode="rw" Description="Access Server configuration, certificates and user database." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/openvpn-as</Config>
+  <Config Name="Admin UI (HTTPS)" Target="943" Default="943" Mode="tcp" Description="Admin UI (/admin) and client portal." Type="Port" Display="always" Required="true" Mask="false">943</Config>
+  <Config Name="VPN TCP / portal" Target="443" Default="443" Mode="tcp" Description="OpenVPN over TCP; also serves the client portal." Type="Port" Display="always" Required="true" Mask="false">443</Config>
+  <Config Name="VPN UDP" Target="1194" Default="1194" Mode="udp" Description="OpenVPN over UDP." Type="Port" Display="always" Required="true" Mask="false">1194</Config>
+  <Config Name="TUN device" Target="" Default="/dev/net/tun" Mode="" Description="Needed for the VPN tunnel." Type="Device" Display="advanced" Required="true" Mask="false">/dev/net/tun</Config>
 </Container>
