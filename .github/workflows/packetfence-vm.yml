@@ -6,6 +6,9 @@ on:
     paths:
       - packetfence-vm/image/**
       - .github/workflows/packetfence-vm.yml
+  # Weekly rebuild picks up Alpine package fixes (no build cache is used).
+  schedule:
+    - cron: "41 4 * * 1"
   workflow_dispatch:
 
 permissions:
