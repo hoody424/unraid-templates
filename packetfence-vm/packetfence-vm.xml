@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>PacketFence-VM</Name>
+  <Repository>ghcr.io/hoody424/packetfence-vm:latest</Repository>
+  <Registry>https://github.com/hoody424/unraid-templates/pkgs/container/packetfence-vm</Registry>
+  <Network>bridge</Network>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/hoody424/unraid-templates/issues</Support>
+  <Project>https://www.packetfence.org/</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/packetfence-vm/README.md</ReadMe>
+  <Overview>Installs PacketFence, the open source network access control (NAC) system, as a virtual machine in the Unraid VM tab. PacketFence itself does not run in Docker; this container is only the installer.
+
+It downloads the official PacketFence ZEN appliance (about 8 GB, MD5-checked), converts its VMware disk into an Unraid vdisk, creates the VM and starts it. Then the container stops. The VM is a normal Unraid VM: start, stop, edit and back it up in the VM tab. Running the container again never changes an existing VM.
+
+Needs: VMs enabled (Settings &gt; VM Manager), 16 GB of free memory and 4 cores for the VM, about 40 GB free in the VM storage during the import (the vdisk is 200 GB thin-provisioned, about 21 GB used).
+
+After the start: open the VM's VNC console in the VM tab. The first network card gets its address by DHCP. Console login root / p@ck3tf3nc3 (change it). Then open https://VM-address:1443 and go through the configurator.</Overview>
+  <Category>Network:Management Security:</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/packetfence-vm/packetfence-vm.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hoody424/unraid-templates/main/packetfence-vm/packetfence-vm.png</Icon>
+  <ExtraSearchTerms>packetfence nac 802.1x radius network access control vm zen inverse</ExtraSearchTerms>
+  <Requires>VM Manager enabled (Settings &gt; VM Manager). The VM needs 16 GB of free memory, 4 CPU cores and about 40 GB free in the VM storage.</Requires>
+  <License>MIT (installer); PacketFence is GPL-2.0</License>
+  <Changes>
+### 2026-10-11
+- Initial release
+  </Changes>
+  <Date>2026-10-11</Date>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="VM name" Target="VM_NAME" Default="PacketFence" Description="Name of the VM in the VM tab and of its folder in the VM storage. Letters, digits, '.', '_' and '-'." Type="Variable" Display="always" Required="true" Mask="false">PacketFence</Config>
+  <Config Name="PacketFence version" Target="PF_VERSION" Default="latest" Description="latest, or a version with a ZEN appliance such as 15.2.0." Type="Variable" Display="always" Required="true" Mask="false">latest</Config>
+  <Config Name="CPU cores" Target="CPUS" Default="4" Description="Virtual CPU cores. PacketFence asks for at least 4." Type="Variable" Display="always" Required="true" Mask="false">4</Config>
+  <Config Name="Memory (GB)" Target="RAM_GB" Default="16" Description="VM memory in GB. PacketFence asks for at least 16." Type="Variable" Display="always" Required="true" Mask="false">16</Config>
+  <Config Name="Network" Target="NETWORK" Default="br0" Description="Unraid bridge for the VM's network card: br0, br0.10 for VLAN 10, or vhost0. PacketFence's guide says to start with one card; a comma-separated list (br0,br0.10) adds more." Type="Variable" Display="always" Required="true" Mask="false">br0</Config>
+  <Config Name="MAC address" Target="MAC_ADDRESS" Default="" Description="Optional MAC for the first network card, for example when your DHCP server only serves known MACs. Empty = random (shown in the container log)." Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="VNC keyboard" Target="VNC_KEYMAP" Default="en-us" Description="Keyboard layout of the VNC console, for example en-us, de, fr." Type="Variable" Display="always" Required="true" Mask="false">en-us</Config>
+  <Config Name="Start VM" Target="START_VM" Default="yes|no" Description="Start the VM right after it is created." Type="Variable" Display="always" Required="true" Mask="false">yes</Config>
+  <Config Name="VM autostart" Target="AUTOSTART" Default="no|yes" Description="Start the VM when the array starts (same as the Autostart switch in the VM tab)." Type="Variable" Display="always" Required="true" Mask="false">no</Config>
+  <Config Name="VM storage" Target="/domains" Default="/mnt/user/domains/" Mode="rw" Description="Your VM storage (Settings &gt; VM Manager &gt; Default VM storage path). The vdisk goes to VM-name/vdisk1.img in here." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/domains/</Config>
+  <Config Name="Downloads" Target="/downloads" Default="/mnt/user/isos/" Mode="rw" Description="Where the ZEN appliance zip is downloaded to. An existing PacketFence-ZEN-vVERSION.zip here or in the VM storage is used instead of downloading." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/isos/</Config>
+  <Config Name="Keep download" Target="KEEP_DOWNLOAD" Default="yes|no" Description="Keep the downloaded zip after the import (no deletes it)." Type="Variable" Display="advanced" Required="true" Mask="false">yes</Config>
+  <Config Name="Source file" Target="SOURCE" Default="" Description="Optional: your own .zip, .ova or .vmdk, as a container path (for example /downloads/PacketFence-ZEN-v15.2.0.zip), or a URL. Empty = official download." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Vdisk type" Target="VDISK_TYPE" Default="raw|qcow2" Description="raw is the Unraid default." Type="Variable" Display="advanced" Required="true" Mask="false">raw</Config>
+  <Config Name="Vdisk bus" Target="VDISK_BUS" Default="virtio|sata|scsi" Description="virtio is fastest; the appliance boots from all three." Type="Variable" Display="advanced" Required="true" Mask="false">virtio</Config>
+  <Config Name="libvirt" Target="/var/run/libvirt" Default="/var/run/libvirt" Mode="rw" Description="libvirt socket, used to create the VM. Do not change." Type="Path" Display="advanced" Required="true" Mask="false">/var/run/libvirt</Config>
+  <Config Name="Docker socket" Target="/var/run/docker.sock" Default="/var/run/docker.sock" Mode="ro" Description="Only used to read the host path of VM storage for the VM definition." Type="Path" Display="advanced" Required="false" Mask="false">/var/run/docker.sock</Config>
+  <Config Name="VM icons" Target="/icons" Default="/boot/config/plugins/dynamix.vm.manager/templates/images" Mode="rw" Description="Unraid's folder for custom VM icons; the PacketFence icon is copied here. Remove to use the Debian icon." Type="Path" Display="advanced" Required="false" Mask="false">/boot/config/plugins/dynamix.vm.manager/templates/images</Config>
+  <Config Name="VM storage host path" Target="DOMAINS_HOST_PATH" Default="" Description="Only needed without the Docker socket: the host path of VM storage, for example /mnt/user/domains." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>
