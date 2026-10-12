@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>yopass</Name>
+  <Repository>ghcr.io/hoody424/yopass:latest</Repository>
+  <Registry>https://github.com/hoody424/unraid-templates/pkgs/container/yopass</Registry>
+  <Network>bridge</Network>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/hoody424/unraid-templates/issues</Support>
+  <Project>https://github.com/jhaals/yopass</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/yopass/README.md</ReadMe>
+  <Overview>Yopass shares passwords, secrets and small files through links that expire and can be opened only once. Paste the secret, send the link, done: the recipient needs no account.
+
+Secrets are encrypted in the browser before they are uploaded, and the key stays in the link, so the server only ever stores ciphertext. This image adds a built-in Memcached, so secrets live in RAM only: nothing is written to disk, and a container restart deletes all open secrets.
+
+Yopass needs HTTPS: browsers only allow the encryption on https:// pages (or on localhost). Put it behind your reverse proxy (Nginx Proxy Manager, SWAG, Traefik, Zoraxy, ...). It works on its own domain or under a path such as https://example.com/yopass/. Over plain http://[IP]:1337 the page only shows a notice.</Overview>
+  <Category>Security: Productivity: Tools:Utilities</Category>
+  <WebUI>http://[IP]:[PORT:1337]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/yopass/yopass.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hoody424/unraid-templates/main/yopass/yopass.png</Icon>
+  <ExtraSearchTerms>password secret share sharing one-time link onetimesecret privatebin send encrypted self-destruct</ExtraSearchTerms>
+  <License>Apache-2.0</License>
+  <Changes>
+### 2026-10-12
+- Initial release (Yopass 15.0.0)
+  </Changes>
+  <Date>2026-10-12</Date>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="WebUI port" Target="1337" Default="1337" Mode="tcp" Description="Web UI and API, plain HTTP. Point your reverse proxy with HTTPS at this port." Type="Port" Display="always" Required="true" Mask="false">1337</Config>
+  <Config Name="Default expiry" Target="DEFAULT_EXPIRY" Default="1h|1d|1w" Description="Expiry pre-selected in the form: 1 hour, 1 day or 1 week." Type="Variable" Display="always" Required="false" Mask="false">1h</Config>
+  <Config Name="One-time only" Target="FORCE_ONETIME_SECRETS" Default="false|true" Description="true = every secret can be opened only once (users cannot untick One-time download)." Type="Variable" Display="always" Required="false" Mask="false">false</Config>
+  <Config Name="Disable file uploads" Target="DISABLE_UPLOAD" Default="false|true" Description="true = text secrets only." Type="Variable" Display="always" Required="false" Mask="false">false</Config>
+  <Config Name="Hide one-click link" Target="DISABLE_ONE_CLICK_LINK" Default="false|true" Description="true = the result page offers only the short link and the key, to send through two different channels (for example mail and phone)." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="Imprint URL" Target="IMPRINT_URL" Default="" Description="Optional link to your imprint / legal notice, shown in the footer." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Privacy notice URL" Target="PRIVACY_NOTICE_URL" Default="" Description="Optional link to your privacy notice, shown in the footer." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Max file size" Target="MAX_FILE_SIZE" Default="512KB" Description="Largest upload, for example 512KB or 1MB. 1MB is the maximum without a Yopass license." Type="Variable" Display="advanced" Required="false" Mask="false">512KB</Config>
+  <Config Name="Max secret size" Target="MAX_LENGTH" Default="10000" Description="Largest encrypted text secret in bytes." Type="Variable" Display="advanced" Required="false" Mask="false">10000</Config>
+  <Config Name="Argon2" Target="ARGON2" Default="false|true" Description="true = derive keys with Argon2id (stronger against guessing custom passwords). If your reverse proxy sets its own Content-Security-Policy, it must allow 'wasm-unsafe-eval'." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="Hide features section" Target="DISABLE_FEATURES" Default="false|true" Description="true = hide the feature list below the form." Type="Variable" Display="advanced" Required="false" Mask="false">false</Config>
+  <Config Name="Trusted proxies" Target="TRUSTED_PROXIES" Default="" Description="Comma-separated IPs or CIDRs of your reverse proxy, so the logs show the real client address from X-Forwarded-For." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Memcached memory (MB)" Target="MEMCACHED_MEMORY" Default="64" Description="RAM for the built-in Memcached that holds the secrets. At least 16." Type="Variable" Display="advanced" Required="false" Mask="false">64</Config>
+  <Config Name="Database" Target="DATABASE" Default="memcached|redis" Description="memcached = the built-in one (default) or an external one set below. redis = an external Redis, set the Redis URL." Type="Variable" Display="advanced" Required="false" Mask="false">memcached</Config>
+  <Config Name="Memcached address" Target="MEMCACHED" Default="127.0.0.1:11211" Description="127.0.0.1:11211 = the built-in Memcached. Any other host:port uses an external Memcached instead." Type="Variable" Display="advanced" Required="false" Mask="false">127.0.0.1:11211</Config>
+  <Config Name="Redis URL" Target="REDIS" Default="" Description="Only with Database = redis, for example redis://192.168.1.10:6379/0." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="License key" Target="LICENSE_KEY" Default="" Description="Optional Yopass business license (OIDC login, branding, read receipts, larger files)." Type="Variable" Display="advanced" Required="false" Mask="true"/>
+</Container>
