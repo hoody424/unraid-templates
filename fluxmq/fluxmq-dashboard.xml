@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>FluxMQ-Dashboard</Name>
+  <Repository>ghcr.io/absmach/fluxmq-dashboard:latest</Repository>
+  <Registry>https://github.com/absmach/fluxmq/pkgs/container/fluxmq-dashboard</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/hoody424/unraid-templates/issues</Support>
+  <Project>https://github.com/absmach/fluxmq/tree/main/ui</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/fluxmq/README.md#dashboard</ReadMe>
+  <Overview>Web dashboard for a FluxMQ broker (install the FluxMQ template first): live message and traffic charts, connected and offline sessions, subscriptions and broker info. It only reads; nothing can be changed from it.
+
+Set FluxMQ admin API to the broker's admin API, for example http://192.168.1.10:8082. Alternatively set Network Type to Container: FluxMQ and use http://127.0.0.1:8082; the dashboard is then reached on the broker's IP, port 3001, and has to be restarted after FluxMQ is restarted or updated.
+
+The dashboard has no login. Keep it on your LAN.</Overview>
+  <Category>HomeAutomation: Network:Other Tools:Utilities</Category>
+  <WebUI>http://[IP]:[PORT:3001]/dashboard</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/fluxmq/fluxmq-dashboard.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hoody424/unraid-templates/main/fluxmq/fluxmq.png</Icon>
+  <ExtraSearchTerms>fluxmq mqtt broker dashboard monitoring</ExtraSearchTerms>
+  <License>Apache-2.0</License>
+  <Changes>
+### 2026-10-13
+- Initial release
+  </Changes>
+  <Date>2026-10-13</Date>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="WebUI port" Target="3001" Default="3001" Mode="tcp" Description="Dashboard web UI, plain HTTP." Type="Port" Display="always" Required="true" Mask="false">3001</Config>
+  <Config Name="FluxMQ admin API" Target="FLUXMQ_API_URL" Default="" Description="URL of the FluxMQ admin API, for example http://192.168.1.10:8082 (the server's IP and the host port of FluxMQ's Admin API). With Network Type Container: FluxMQ use http://127.0.0.1:8082." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="Cluster node URLs" Target="FLUXMQ_NODE_URLS" Default="" Description="Only for a FluxMQ cluster: comma-separated admin API URLs of all nodes. Empty = the admin API above." Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>

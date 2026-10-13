@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>FluxMQ</Name>
+  <Repository>ghcr.io/absmach/fluxmq:latest</Repository>
+  <Registry>https://github.com/absmach/fluxmq/pkgs/container/fluxmq</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/hoody424/unraid-templates/issues</Support>
+  <Project>https://github.com/absmach/fluxmq</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/fluxmq/README.md</ReadMe>
+  <Overview>FluxMQ is a lightweight message broker in a single Go binary: MQTT 3.1.1 and 5.0 over TCP and WebSocket, AMQP 1.0 and AMQP 0.9.1, durable queues with consumer groups, and BadgerDB storage. Official image from Abstract Machines; the upstream project calls itself experimental.
+
+The defaults work without a config file: MQTT 3.1.1 on 1883, MQTT 5.0 on 1884, MQTT over WebSocket on 8083/8084 (path /mqtt), AMQP 1.0 on 5672, AMQP 0.9.1 on 5682, health on 8081 and the admin API on 8082. Data is kept in the appdata folder.
+
+Retained messages need the config.yaml from the README (single-node cluster mode). Without it they are stored but not delivered to new subscribers.
+
+FluxMQ has no built-in user/password login: clients connect anonymously unless you add an external auth service. Only publish it to networks you trust. A web dashboard is available as the separate FluxMQ-Dashboard template.</Overview>
+  <Category>HomeAutomation: Network:Other Tools:Utilities</Category>
+  <WebUI/>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/fluxmq/fluxmq.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hoody424/unraid-templates/main/fluxmq/fluxmq.png</Icon>
+  <ExtraSearchTerms>mqtt broker amqp message queue iot mosquitto emqx rabbitmq websocket pubsub</ExtraSearchTerms>
+  <License>Apache-2.0</License>
+  <Changes>
+### 2026-10-13
+- Initial release
+  </Changes>
+  <Date>2026-10-13</Date>
+  <ExtraParams>--user 99:100 --ulimit nofile=65536:65536</ExtraParams>
+  <PostArgs>--config /tmp/fluxmq/config.yaml --config-optional</PostArgs>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="Appdata" Target="/tmp/fluxmq" Default="/mnt/user/appdata/fluxmq" Mode="rw" Description="Message store and the optional config.yaml. /tmp/fluxmq is FluxMQ's built-in data location, so the defaults persist here without a config file." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/fluxmq</Config>
+  <Config Name="MQTT 3.1.1" Target="1883" Default="1883" Mode="tcp" Description="MQTT 3.1.1 over TCP." Type="Port" Display="always" Required="true" Mask="false">1883</Config>
+  <Config Name="MQTT 5.0" Target="1884" Default="1884" Mode="tcp" Description="MQTT 5.0 over TCP. FluxMQ serves each MQTT version on its own port." Type="Port" Display="always" Required="true" Mask="false">1884</Config>
+  <Config Name="MQTT 3.1.1 WebSocket" Target="8083" Default="8083" Mode="tcp" Description="MQTT 3.1.1 over WebSocket, path /mqtt." Type="Port" Display="advanced" Required="false" Mask="false">8083</Config>
+  <Config Name="MQTT 5.0 WebSocket" Target="8084" Default="8084" Mode="tcp" Description="MQTT 5.0 over WebSocket, path /mqtt." Type="Port" Display="advanced" Required="false" Mask="false">8084</Config>
+  <Config Name="AMQP 1.0" Target="5672" Default="5672" Mode="tcp" Description="AMQP 1.0." Type="Port" Display="advanced" Required="false" Mask="false">5672</Config>
+  <Config Name="AMQP 0.9.1" Target="5682" Default="5682" Mode="tcp" Description="AMQP 0.9.1 (RabbitMQ clients)." Type="Port" Display="advanced" Required="false" Mask="false">5682</Config>
+  <Config Name="Health" Target="8081" Default="8081" Mode="tcp" Description="Health and readiness checks: /health, /ready." Type="Port" Display="advanced" Required="false" Mask="false">8081</Config>
+  <Config Name="Admin API" Target="8082" Default="8082" Mode="tcp" Description="Admin API for FluxMQ-Dashboard. No authentication: anyone who reaches it can list all sessions, manage queues and reload the config. Do not forward it." Type="Port" Display="advanced" Required="false" Mask="false">8082</Config>
+</Container>

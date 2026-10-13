@@ -1,0 +1,35 @@
+# FluxMQ config for the Unraid template.
+# Copy this file to the appdata folder (default /mnt/user/appdata/fluxmq/config.yaml)
+# and restart the container. Every key not listed here keeps FluxMQ's built-in
+# default. Full reference: https://www.absmach.eu/docs/fluxmq/reference/configuration-reference
+#
+# Keep all paths under /tmp/fluxmq: that is where the template mounts the appdata folder.
+
+server:
+  # Admin API for FluxMQ-Dashboard. It has no authentication.
+  # If the dashboard uses this container's network (Network Type: Container),
+  # use "127.0.0.1:8082" so nothing else can reach it.
+  admin_api_addr: ":8082"
+
+storage:
+  type: "badger"
+  badger_dir: "/tmp/fluxmq/data"
+
+# Single-node cluster with embedded etcd. Without it, retained messages are
+# stored but not delivered to new subscribers (FluxMQ build of 2026-10-13).
+# etcd and the node transport listen on loopback only.
+cluster:
+  enabled: true
+  allow_insecure: true
+  node_id: "fluxmq1"
+  etcd:
+    data_dir: "/tmp/fluxmq/etcd"
+    bind_addr: "127.0.0.1:2380"
+    client_addr: "127.0.0.1:2379"
+    initial_cluster: "fluxmq1=http://127.0.0.1:2380"
+    bootstrap: true
+  transport:
+    bind_addr: "127.0.0.1:7948"
+
+log:
+  level: "info"

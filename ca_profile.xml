@@ -8,6 +8,7 @@ Unraid templates maintained by hoody424.
 - **ntopng**: network traffic analysis, official image ntop/ntopng, with an external Redis so settings survive updates.
 - **nightcrawler**: watches marketplaces and shops (eBay, Shopify, any web shop) for new and used products, with spec filters, price tracking, alerts and optional Claude AI.
 - **Yopass**: share passwords and secrets through one-time links that expire; encrypted in the browser, kept in RAM only, works under a sub-path behind a reverse proxy.
+- **FluxMQ** and **FluxMQ-Dashboard**: MQTT 3.1.1/5.0 and AMQP message broker in a single Go binary, official images ghcr.io/absmach/fluxmq, with a read-only web dashboard.
 - **PacketFence-VM**: installs the PacketFence ZEN appliance as a VM in the Unraid VM tab.
 - **OpenVPN Access Server**: official image openvpn/openvpn-as.
 - **psono**: self-hosted password manager server, psono/psono-server.
