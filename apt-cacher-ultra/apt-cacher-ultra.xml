@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>apt-cacher-ultra</Name>
+  <Repository>ghcr.io/hoody424/apt-cacher-ultra:latest</Repository>
+  <Registry>https://github.com/hoody424/unraid-templates/pkgs/container/apt-cacher-ultra</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/hoody424/unraid-templates/issues</Support>
+  <Project>https://github.com/linsomniac/apt-cacher-ultra</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/apt-cacher-ultra/README.md</ReadMe>
+  <Overview>Caching proxy for Debian and Ubuntu package downloads (apt). The first machine that installs a package fetches it from the internet; every other machine gets it from your server. A maintained replacement for apt-cacher-ng: same port 3142 and the same client settings, so existing clients keep working.
+
+Checks every file against the repository's signed index, and keeps serving cached packages when a mirror is slow or down.
+
+Clients: put Acquire::http::Proxy "http://SERVER-IP:3142"; into /etc/apt/apt.conf.d/01proxy. HTTPS repositories are not cached unless their sources line is changed to http://HTTPS///host/path.
+
+The config is written to /config/config.toml on the first start; edit it there and restart. The status page and Prometheus metrics are on port 6789.</Overview>
+  <Category>Network:Proxy Tools:Utilities</Category>
+  <WebUI>http://[IP]:[PORT:6789]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/apt-cacher-ultra/apt-cacher-ultra.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/hoody424/unraid-templates/main/apt-cacher-ultra/apt-cacher-ultra.png</Icon>
+  <ExtraSearchTerms>apt-cacher-ng apt cache proxy debian ubuntu deb package mirror acng squid-deb-proxy approx</ExtraSearchTerms>
+  <Requires>Clients need one line in their apt config, see the README.</Requires>
+  <License>CC0-1.0 (apt-cacher-ultra); MIT (image and template)</License>
+  <Changes>
+### 2026-10-23
+- Initial release (apt-cacher-ultra 1.0.2)
+  </Changes>
+  <Date>2026-10-23</Date>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="Proxy port" Target="3142" Default="3142" Mode="tcp" Description="Port the apt clients use: Acquire::http::Proxy &quot;http://SERVER-IP:3142&quot;;" Type="Port" Display="always" Required="true" Mask="false">3142</Config>
+  <Config Name="Status page port" Target="6789" Default="6789" Mode="tcp" Description="Status page, /metrics (Prometheus) and /healthz. Set an admin password below if other people can reach it." Type="Port" Display="always" Required="true" Mask="false">6789</Config>
+  <Config Name="Cache" Target="/cache" Default="/mnt/user/appdata/apt-cacher-ultra/cache" Mode="rw" Description="Downloaded packages and the cache database. A cache pool is faster than the array." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/apt-cacher-ultra/cache</Config>
+  <Config Name="Config" Target="/config" Default="/mnt/user/appdata/apt-cacher-ultra/config" Mode="rw" Description="config.toml, written with defaults on the first start." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/apt-cacher-ultra/config</Config>
+  <Config Name="Admin password" Target="ADMIN_PASSWORD" Default="" Description="Optional. Protects the status page with a login (user below). Empty = no login." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="Admin user" Target="ADMIN_USER" Default="admin" Description="Login name for the status page when a password is set." Type="Variable" Display="advanced" Required="false" Mask="false">admin</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Description="User ID that owns the cache files." Type="Variable" Display="advanced" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Description="Group ID that owns the cache files." Type="Variable" Display="advanced" Required="true" Mask="false">100</Config>
+  <Config Name="Time zone" Target="TZ" Default="Etc/UTC" Description="Time zone for log timestamps, e.g. Europe/Berlin." Type="Variable" Display="advanced" Required="false" Mask="false">Etc/UTC</Config>
+</Container>

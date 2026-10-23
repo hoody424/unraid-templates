@@ -3,6 +3,9 @@ updates:
   - package-ecosystem: docker
     directory: /packetfence-vm/image
     schedule: { interval: weekly }
+  - package-ecosystem: docker
+    directory: /apt-cacher-ultra/image
+    schedule: { interval: weekly }
   - package-ecosystem: github-actions
     directory: /
     schedule: { interval: monthly }

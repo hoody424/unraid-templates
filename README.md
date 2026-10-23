@@ -11,4 +11,5 @@ Store for my unraid templates
 | OpenVPN Access Server | `openvpn/openvpn-as` | [openvpn-as/openvpn-as.xml](openvpn-as/openvpn-as.xml) |
 | [Yopass](yopass/README.md) | `ghcr.io/hoody424/yopass` (Yopass + Memcached) | [yopass/yopass.xml](yopass/yopass.xml) |
 | [FluxMQ](fluxmq/README.md) | `ghcr.io/absmach/fluxmq` + `ghcr.io/absmach/fluxmq-dashboard` | [fluxmq/fluxmq.xml](fluxmq/fluxmq.xml), [fluxmq/fluxmq-dashboard.xml](fluxmq/fluxmq-dashboard.xml) |
+| [apt-cacher-ultra](apt-cacher-ultra/README.md) | `ghcr.io/hoody424/apt-cacher-ultra` | [apt-cacher-ultra/apt-cacher-ultra.xml](apt-cacher-ultra/apt-cacher-ultra.xml) |
 | [psono](psono/README.md) | `psono/psono-server` | [psono/psono.xml](psono/psono.xml) |

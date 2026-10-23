@@ -1,0 +1,42 @@
+# apt-cacher-ultra config, written on the first start of the container.
+# Edit it and restart the container. All options:
+# https://github.com/linsomniac/apt-cacher-ultra/blob/main/docs/configuration.md
+
+[cache]
+dir    = "/cache"
+listen = "0.0.0.0:3142"
+# Host:port shown by "apt-cacher-ultra -print-apt-conf", e.g. "192.168.1.10:3142".
+advertise_host = ""
+
+[upstream]
+# Which repository hosts may be fetched. Anyone who can reach port 3142 can
+# use the cache for these hosts. Example for Debian and Ubuntu only:
+# allowed_host_regex = ['^deb\.debian\.org$', '^security\.debian\.org$',
+#   '^([a-z]{2}\.)?archive\.ubuntu\.com$', '^security\.ubuntu\.com$']
+allowed_host_regex = ['^.*$']
+# Address ranges the cache must never connect to. Empty allows mirrors on
+# your LAN. Example that blocks private ranges:
+# deny_target_ranges = ["127.0.0.0/8", "::1/128", "10.0.0.0/8",
+#   "172.16.0.0/12", "192.168.0.0/16", "169.254.0.0/16", "fe80::/10", "fc00::/7"]
+deny_target_ranges = []
+
+[admin]
+# Status page, /metrics and /healthz. Set ADMIN_PASSWORD in the template to
+# require a login; the container manages htpasswd_file below.
+enabled       = true
+listen        = "0.0.0.0:6789"
+htpasswd_file = ""
+
+[serve]
+# Keep serving cached metadata while a mirror is down.
+serve_stale_when_upstream_down = true
+
+[log]
+level  = "info"
+format = "text"
+
+[tls_mitm]
+# Off: HTTPS repositories pass through uncached. Use http://HTTPS///host/path
+# in a client's sources to cache an HTTPS repository without this. Turning it
+# on needs the generated CA (/cache/ca) installed on every client.
+enabled = false
