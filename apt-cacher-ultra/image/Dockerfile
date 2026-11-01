@@ -1,4 +1,4 @@
-FROM alpine:3.22
+FROM alpine:3.24
 
 # Upstream ships a static Go binary with each release but no image.
 ARG ACU_VERSION=1.0.2
