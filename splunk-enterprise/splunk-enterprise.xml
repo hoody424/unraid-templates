@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Splunk-Enterprise</Name>
+  <Repository>splunk/splunk:latest</Repository>
+  <Registry>https://hub.docker.com/r/splunk/splunk</Registry>
+  <Network>bridge</Network>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/hoody424/unraid-templates/issues</Support>
+  <Project>https://www.splunk.com/en_us/products/splunk-enterprise.html</Project>
+  <ReadMe>https://github.com/hoody424/unraid-templates/blob/main/splunk-enterprise/README.md</ReadMe>
+  <Overview>Splunk Enterprise from the official splunk/splunk image, as a single standalone instance: search, dashboards and alerts over logs and machine data.
+
+Receives data from Splunk Universal Forwarders (port 9997), over the HTTP Event Collector (port 8088) or from files you add in the web UI (port 8000).
+
+You must accept the Splunk General Terms and the license (two variables below) and set an admin password of at least 8 characters before the first start. Without a license file Splunk runs as a 60-day trial and then as Splunk Free (500 MB of data per day).
+
+To install a specific version, replace "latest" in the repository with a tag such as splunk/splunk:10.2.6. The first start takes a few minutes.</Overview>
+  <Category>Tools: Productivity: Status:Stable</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/hoody424/unraid-templates/main/splunk-enterprise/splunk-enterprise.xml</TemplateURL>
+  <Icon>https://cdn.jsdelivr.net/gh/selfhst/icons/png/splunk.png</Icon>
+  <ExtraSearchTerms>splunk siem log logs logging search analytics hec universal forwarder syslog</ExtraSearchTerms>
+  <Requires>Accept the Splunk General Terms and license (variables below) and set an admin password. About 4 GB of RAM and fast storage for the index.</Requires>
+  <License>Splunk General Terms (Splunk Enterprise, proprietary); MIT (template)</License>
+  <Changes>
+### 2026-11-14
+- Initial release (official splunk/splunk image)
+  </Changes>
+  <Date>2026-11-14</Date>
+  <ExtraParams>--ulimit nofile=65536:65536 --stop-timeout 120</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Config Name="Web UI port" Target="8000" Default="8000" Mode="tcp" Description="Splunk Web." Type="Port" Display="always" Required="true" Mask="false">8000</Config>
+  <Config Name="Management port" Target="8089" Default="8089" Mode="tcp" Description="REST API and management (HTTPS). Deployment server and the splunk CLI use it." Type="Port" Display="always" Required="true" Mask="false">8089</Config>
+  <Config Name="Forwarder receiving port" Target="9997" Default="9997" Mode="tcp" Description="Data from Splunk Universal Forwarders. Receiving on 9997 is enabled automatically." Type="Port" Display="always" Required="true" Mask="false">9997</Config>
+  <Config Name="HTTP Event Collector port" Target="8088" Default="8088" Mode="tcp" Description="HTTP Event Collector (HTTPS). Change the host side if 8088 is taken on your server. Create tokens in Settings, Data inputs, HTTP Event Collector." Type="Port" Display="always" Required="true" Mask="false">8088</Config>
+  <Config Name="Config" Target="/opt/splunk/etc" Default="/mnt/user/appdata/splunk-enterprise/etc" Mode="rw" Description="Splunk configuration, apps and users (/opt/splunk/etc)." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/splunk-enterprise/etc</Config>
+  <Config Name="Data" Target="/opt/splunk/var" Default="/mnt/user/appdata/splunk-enterprise/var" Mode="rw" Description="Indexes and internal logs (/opt/splunk/var). Grows with the amount of data you index; put it on a pool with enough space." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/splunk-enterprise/var</Config>
+  <Config Name="Admin password" Target="SPLUNK_PASSWORD" Default="" Description="Password for the user admin, at least 8 characters. Only used on the first start; change it later in the web UI." Type="Variable" Display="always" Required="true" Mask="true"/>
+  <Config Name="Accept license" Target="SPLUNK_START_ARGS" Default="" Description="Enter --accept-license to accept the Splunk Enterprise license. The container does not start without it." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="Accept Splunk General Terms" Target="SPLUNK_GENERAL_TERMS" Default="" Description="Enter --accept-sgt-current-at-splunk-com to accept the Splunk General Terms (https://www.splunk.com/en_us/legal/splunk-general-terms.html)." Type="Variable" Display="always" Required="true" Mask="false"/>
+  <Config Name="Time zone" Target="TZ" Default="Etc/UTC" Description="Time zone of the container, e.g. Europe/Berlin." Type="Variable" Display="advanced" Required="false" Mask="false">Etc/UTC</Config>
+</Container>
